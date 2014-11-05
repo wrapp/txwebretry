@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='txwebretry',
-    version='0.1.0',
+    version='0.1.1',
     description='Retry Twisted web requests',
     long_description='Utilities for retrying requests with twisted.web.client and derivatives.',
     url='https://github.com/wrapp/txwebretry',

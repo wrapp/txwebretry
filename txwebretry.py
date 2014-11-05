@@ -24,14 +24,19 @@ class Retry(object):
 
     web_errors = [ResponseFailed, ConnectionRefusedError]
 
-    def __init__(self, backoff_iterator):
-        self.backoff_iterator = backoff_iterator
+    def __init__(self, backoff_func, *backoff_args, **backoff_kwargs):
+        self.backoff_func = backoff_func
+        self.backoff_args = backoff_args
+        self.backoff_kwargs = backoff_kwargs
 
     def __call__(self, f, *args, **kwargs):
         retrying_call = RetryingCall(f, *args, **kwargs)
         return retrying_call.start(
-                backoffIterator=self.backoff_iterator,
+                backoffIterator=self._backoff_iterator(),
                 failureTester=self._test_failure)
+
+    def _backoff_iterator(self):
+        return self.backoff_func(*self.backoff_args, **self.backoff_kwargs)
 
     def _test_failure(self, failure):
         return failure.check(self.web_errors)
