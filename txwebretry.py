@@ -45,17 +45,14 @@ class Retry(object):
 def ImmediateRetry(retries=3):
     ''' Returns a Retry context that will retry calls immediately. '''
 
-
-    backoff_iterator = repeat(0, retries)
-    return Retry(backoff_iterator)
+    return Retry(repeat, 0, retries)
 
 
 def ExponentialBackoffRetry(retries=3):
     ''' Returns a Retry context that will retry calls using exponential
     backoff. '''
 
-    backoff_iterator = simpleBackoffIterator(retries)
-    return Retry(backoff_iterator)
+    return Retry(simpleBackoffIterator, retries)
 
 
 # For convenience
