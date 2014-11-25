@@ -56,7 +56,11 @@ def ExponentialBackoffRetry(retries=3):
 
 
 # For convenience
+
 retry3_exponential = ExponentialBackoffRetry(3)
 retry5_exponential = ExponentialBackoffRetry(5)
+retry10_exponential = ExponentialBackoffRetry(10)
+
 retry3_immediate = ImmediateRetry(3)
 retry5_immediate = ImmediateRetry(5)
+retry10_immediate = ImmediateRetry(10)
