@@ -15,14 +15,13 @@ Usage:
 
 from itertools import repeat
 from twisted.web.client import ResponseFailed
-from twisted.internet.error import ConnectionRefusedError
+from twisted.internet.error import ConnectionRefusedError, ConnectingCancelledError
 from txretry.retry import RetryingCall, simpleBackoffIterator
-
 
 class Retry(object):
     ''' Defines a context for making retrying calls. '''
 
-    web_errors = [ResponseFailed, ConnectionRefusedError]
+    web_errors = [ResponseFailed, ConnectionRefusedError, ConnectingCancelledError]
 
     def __init__(self, backoff_func, *backoff_args, **backoff_kwargs):
         self.backoff_func = backoff_func
