@@ -38,20 +38,21 @@ class Retry(object):
         return self.backoff_func(*self.backoff_args, **self.backoff_kwargs)
 
     def _test_failure(self, failure):
-        return failure.check(self.web_errors)
+        if not failure.check(*self.web_errors):
+            return failure
 
 
-def ImmediateRetry(retries=3):
+def ImmediateRetry(attempts=3):
     ''' Returns a Retry context that will retry calls immediately. '''
 
-    return Retry(repeat, 0, retries)
+    return Retry(repeat, 0, attempts)
 
 
-def ExponentialBackoffRetry(retries=3):
+def ExponentialBackoffRetry(attempts=3):
     ''' Returns a Retry context that will retry calls using exponential
     backoff. '''
 
-    return Retry(simpleBackoffIterator, retries)
+    return Retry(simpleBackoffIterator, attempts)
 
 
 # For convenience
