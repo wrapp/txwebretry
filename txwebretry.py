@@ -15,7 +15,7 @@ Usage:
 
 from itertools import repeat
 from twisted.internet.error import ConnectionRefusedError, \
-        ConnectingCancelledError, TimeoutError
+        ConnectingCancelledError, ConnectionDone, TimeoutError
 from twisted.web.client import ResponseFailed
 from txretry.retry import RetryingCall, simpleBackoffIterator
 
@@ -28,6 +28,7 @@ class Retry(object):
             ResponseFailed,
             ConnectionRefusedError,
             ConnectingCancelledError,
+            ConnectionDone,
             TimeoutError]
 
     def __init__(self, backoff_func, *backoff_args, **backoff_kwargs):
